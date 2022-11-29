@@ -10,6 +10,7 @@ export class InventorysController extends BaseController {
             .get('', this.getAll)
             .get('/:id', this.getOne)
             .post('', this.create)
+            .delete('/:id', this.remove)
 
 
     }
@@ -27,7 +28,7 @@ export class InventorysController extends BaseController {
         try {
             const inventoryItem = await inventorysService.getOne(req.params.id)
 
-            return response.send({ inventoryItem, message: "Here is the inventory item" })
+            return res.send({ inventoryItem, message: 'Here is the inventory item' })
         } catch (error) {
             next(error)
         }
@@ -41,5 +42,15 @@ export class InventorysController extends BaseController {
             next(error)
         }
     }
+    async remove(req, res, next) {
+        try {
+            const inventoryItem = await inventorysService.remove(req.params.id)
+
+            return res.send({ inventoryItem, message: 'item deleted' })
+        } catch (error) {
+            next(error)
+        }
+    }
+
 
 }
