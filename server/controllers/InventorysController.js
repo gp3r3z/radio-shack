@@ -1,5 +1,5 @@
 import BaseController from '../utils/BaseController'
-import { inventorysService } from '../services/InventorysService.js'
+import { inventoriesService } from '../services/InventoriesService.js'
 import { logger } from '../utils/Logger.js'
 import { response } from 'express'
 
@@ -17,7 +17,7 @@ export class InventorysController extends BaseController {
 
     async getAll(req, res, next) {
         try {
-            const inventory = await inventorysService.getAll()
+            const inventory = await inventoriesService.getAll()
             return res.send(inventory)
 
         } catch (error) {
@@ -26,7 +26,7 @@ export class InventorysController extends BaseController {
     }
     async getOne(req, res, next) {
         try {
-            const inventoryItem = await inventorysService.getOne(req.params.id)
+            const inventoryItem = await inventoriesService.getOne(req.params.id)
 
             return res.send({ inventoryItem, message: 'Here is the inventory item' })
         } catch (error) {
@@ -36,7 +36,7 @@ export class InventorysController extends BaseController {
     async create(req, res, next) {
         try {
             // logger.log(req.body)
-            const newInventory = await inventorysService.create(req.body)
+            const newInventory = await inventoriesService.create(req.body)
             return res.send(newInventory)
         } catch (error) {
             next(error)
@@ -44,7 +44,7 @@ export class InventorysController extends BaseController {
     }
     async remove(req, res, next) {
         try {
-            const inventoryItem = await inventorysService.remove(req.params.id)
+            const inventoryItem = await inventoriesService.remove(req.params.id)
 
             return res.send({ inventoryItem, message: 'item deleted' })
         } catch (error) {

@@ -4,12 +4,15 @@ import { logger } from "../utils/Logger.js"
 
 
 
-class InventorysService {
+class InventoriesService {
     async getAll() {
-        const inventory = await dbContext.Inventory
+        // NOTE we now can access the db from db context 
+        const inventory = await dbContext.Inventories.find({})
         return inventory
     }
     async getOne(inventoryId) {
+
+        // TODO get from db 
         logger.log(inventoryId)
         const inventoryItem = await dbContext.Inventory.find(inv => inv.id == inventoryId)
 
@@ -20,12 +23,17 @@ class InventorysService {
     async create(newinventory) {
 
         logger.log(newinventory)
-        newinventory.id = dbContext.Inventory[dbContext.Inventory.length - 1].id + 1
-        await dbContext.Inventory.push(newinventory)
-        return newinventory
+        // newinventory.id = dbContext.Inventory[dbContext.Inventory.length - 1].id + 1
+        // await dbContext.Inventory.push(newinventory)
+
+        // NOTE connecting to db
+        let newItem = dbContext.Inventories.create(newinventory)
+        return newItem
 
     }
     async remove(inventoryId) {
+        // TODO remove from db 
+
         const removedItem = await this.getOne(inventoryId)
         let index = dbContext.Inventory.indexOf(removedItem)
         dbContext.Inventory.splice(index, 1)
@@ -34,4 +42,4 @@ class InventorysService {
 
 }
 
-export const inventorysService = new InventorysService()
+export const inventoriesService = new InventoriesService()
